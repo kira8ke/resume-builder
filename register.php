@@ -9,12 +9,12 @@ ini_set('display_errors', 1);
 // Check if the form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Sanitize input values
-    $fullname = isset($_POST["fullname"]) ? trim($_POST["fullname"]) : '';
+    $username = isset($_POST["username"]) ? trim($_POST["username"]) : '';
     $email = isset($_POST["email"]) ? trim($_POST["email"]) : '';
     $password = isset($_POST["password"]) ? trim($_POST["password"]) : '';
 
     // Validate input fields
-    if (empty($fullname) || empty($email) || empty($password)) {
+    if (empty($username) || empty($email) || empty($password)) {
         echo "<p class='error'>All fields are required.</p>";
     } else {
         // Check if the email is already registered
@@ -31,9 +31,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
                 // Insert user into the database
-                $stmt = $conn->prepare("INSERT INTO users (fullname, email, password) VALUES (:fullname, :email, :password)");
+                $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
                 $stmt->execute([
-                    ':fullname' => $fullname,
+                    ':username' => $username,
                     ':email' => $email,
                     ':password' => $hashed_password
                 ]);
