@@ -1,5 +1,5 @@
 <?php
-include 'db.php'; // Ensure this file exists and is correct
+include 'dashboard.php'; // Ensure this file exists and is correct
 
 session_start(); // Start session after including database connection
 
