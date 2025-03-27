@@ -8,10 +8,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = isset($_POST["email"]) ? trim($_POST["email"]) : null;
     $password = isset($_POST["password"]) ? $_POST["password"] : null;
 
-    // Validate that all fields are provided
-    if (!$fullname || !$email || !$password) {
-        die("All fields are required.");
-    }
+    if (empty($fullname) || empty($email) || empty($password)) {
+        echo "<p class='error'>All fields are required.</p>";
+    } 
 
     // Hash the password for security
     $hashed_password = password_hash($password, PASSWORD_BCRYPT);

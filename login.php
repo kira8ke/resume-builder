@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-include 'dashboard.php'; // Ensure this file exists and is correct
+include 'db_config.php'; // Ensure this file exists and is correct
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'] ?? '';
