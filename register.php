@@ -1,16 +1,38 @@
 <?php
-require 'db_config.php'; // Ensure you have a database connection file
+require 'db_config.php'; // Ensure this file contains a working PDO connection
+session_start();
+
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 // Check if the form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Use isset() to avoid "undefined array key" errors
-    $fullname = isset($_POST["fullname"]) ? trim($_POST["fullname"]) : null;
-    $email = isset($_POST["email"]) ? trim($_POST["email"]) : null;
-    $password = isset($_POST["password"]) ? $_POST["password"] : null;
+    // Sanitize input values
+    $fullname = isset($_POST["fullname"]) ? trim($_POST["fullname"]) : '';
+    $email = isset($_POST["email"]) ? trim($_POST["email"]) : '';
+    $password = isset($_POST["password"]) ? $_POST["password"] : '';
 
+    // Validate input fields
     if (empty($fullname) || empty($email) || empty($password)) {
         echo "<p class='error'>All fields are required.</p>";
-    } 
+        exit(); // Stop script execution
+    }
+
+    // Check if the email is already registered
+    try {
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE email = :email");
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+        $emailExists = $stmt->fetchColumn();
+
+        if ($emailExists) {
+            echo "<p class='error'>Email already exists. Try logging in.</p>";
+            exit();
+        }
+    } catch (PDOException $e) {
+        die("Error checking email: " . $e->getMessage());
+    }
 
     // Hash the password for security
     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
@@ -24,10 +46,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ':password' => $hashed_password
         ]);
 
-        echo "Registration successful! <a href='login.php'>Login Here</a>";
+        echo "<p class='success'>Registration successful! Redirecting to login...</p>";
+        header("refresh:2;url=login.php"); // Redirect after 2 seconds
+        exit();
     } catch (PDOException $e) {
-        die("Error: " . $e->getMessage());
+        die("Error inserting user: " . $e->getMessage());
     }
 }
 ?>
-
