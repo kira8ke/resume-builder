@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // Prepare the SQL statement to get user data
-        $stmt = $conn->prepare("SELECT id, username, password FROM users WHERE email = :email");
+        $stmt = $conn->prepare("SELECT id, fullname, password FROM users WHERE email = :email");
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
 
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // If user exists, verify password
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['username'];
+            $_SESSION['fullname'] = $user['fullname'];
 
             // Redirect to dashboard
             header("Location: dashboard.php");
