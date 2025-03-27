@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Resume Builder</h1>
+        <p>Create professional resumes easily!</p>
+
+        <!-- Registration Form -->
+        <div class="form-container">
+            <h2>Register</h2>
+            <form action="register.php" method="POST">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Register</button>
+            </form>
+            <p>Already have an account? <button onclick="showLogin()">Login</button></p>
+        </div>
+
+        <!-- Login Form (Hidden Initially) -->
+        <div class="form-container hidden" id="login-form">
+            <h2>Login</h2>
+            <form action="login.php" method="POST">
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <button onclick="showRegister()">Register</button></p>
+        </div>
+    </div>
+
+    <script>
+        function showLogin() {
+            document.querySelector(".form-container").classList.add("hidden");
+            document.getElementById("login-form").classList.remove("hidden");
+        }
+
+        function showRegister() {
+            document.getElementById("login-form").classList.add("hidden");
+            document.querySelector(".form-container").classList.remove("hidden");
+        }
+    </script>
+</body>
+</html>

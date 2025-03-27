@@ -1,0 +1,138 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #3a3d62, #2c2e49); /* Soft, elegant purples */
+    color: #eaeaea; /* Light gray text */
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Main Container */
+.container {
+    max-width: 400px;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.08); /* Light transparent effect */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px); /* Smooth glass effect */
+}
+
+/* Titles */
+h1, h2 {
+    font-size: 26px;
+    font-weight: bold;
+    color: #d3cce3; /* Soft lavender */
+}
+
+p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #cfcfcf; /* Light gray */
+}
+
+/* Form Container */
+.form-container {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    border-radius: 8px;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Input Fields */
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    outline: none;
+}
+
+/* Placeholder Styling */
+input::placeholder, textarea::placeholder {
+    color: #d1d1d1;
+    opacity: 0.8;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #7367f0; /* Soft muted purple */
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+button:hover {
+    background: #5a55c2; /* Darker shade for hover */
+    transform: scale(1.05);
+}
+
+/* Dashboard Styles */
+header {
+    background: #2e3149;
+    padding: 10px;
+    text-align: left;
+}
+
+.logout-button {
+    float: right;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+    max-width: 800px;
+    margin: 50px auto;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Sections */
+section {
+    margin-bottom: 20px;
+}
+
+/* Resume Preview */
+.resume-preview {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+/* File Upload */
+input[type="file"] {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px;
+    border-radius: 6px;
+}
+
+/* Smooth Transitions */
+.form-container, .dashboard-container, .resume-preview {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container, .dashboard-container {
+        width: 90%;
+        padding: 15px;
+    }
+}
