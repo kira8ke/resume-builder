@@ -39,8 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute();
 
         // Redirect to login page after successful registration
-        echo "<p style='color:green;'>Registration successful! Redirecting to login...</p>";
-        header("refresh:2;url=login.php"); // Redirect after 2 seconds
+        header("Location: login.php");
         exit();
     } catch (PDOException $e) {
         die("<p style='color:red;'>Database error: " . $e->getMessage() . "</p>");

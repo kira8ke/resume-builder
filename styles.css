@@ -1,46 +1,98 @@
 /* General Styles */
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #3a3d62, #2c2e49); /* Soft, elegant purples */
-    color: #eaeaea; /* Light gray text */
+    background: linear-gradient(135deg, #1e1e2f, #2c2e49); /* Deep muted purple */
+    color: #eaeaea;
     text-align: center;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    transition: opacity 1s ease-in-out;
 }
 
-/* Main Container */
-.container {
-    max-width: 400px;
-    padding: 25px;
-    background: rgba(255, 255, 255, 0.08); /* Light transparent effect */
+/* Smooth Fade-in Effect */
+body.hidden {
+    opacity: 0;
+}
+
+/* Scrollable Content */
+html, body {
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* Sidebar */
+.sidebar {
+    background: rgba(20, 22, 35, 0.9);
+    color: white;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+/* Sidebar Logo */
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Logout Button */
+.logout-button {
+    text-decoration: none;
+    background: #ff4d4d;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background 0.3s ease-in-out;
+}
+
+.logout-button:hover {
+    background: #cc0000;
+}
+
+/* Main Dashboard */
+.dashboard-container {
+    margin-top: 80px;
+    padding: 20px;
+    max-width: 900px;
+    margin: 100px auto 50px;
+    background: rgba(255, 255, 255, 0.08);
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px); /* Smooth glass effect */
+    backdrop-filter: blur(10px);
+    transition: all 0.5s ease-in-out;
 }
 
-/* Titles */
-h1, h2 {
+/* Welcome Header */
+.intro {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.intro h1 {
     font-size: 26px;
     font-weight: bold;
-    color: #d3cce3; /* Soft lavender */
+    color: #d3cce3;
 }
 
-p {
-    font-size: 16px;
-    margin-bottom: 20px;
-    color: #cfcfcf; /* Light gray */
+/* Resume Form & Preview */
+section {
+    margin-bottom: 30px;
 }
 
-/* Form Container */
-.form-container {
-    background: rgba(255, 255, 255, 0.15);
+/* Form Styles */
+.resume-form, .resume-preview {
+    background: rgba(255, 255, 255, 0.12);
     padding: 20px;
-    border-radius: 8px;
-    transition: opacity 0.3s ease-in-out;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
 }
 
 /* Input Fields */
@@ -66,8 +118,8 @@ input::placeholder, textarea::placeholder {
 button {
     width: 100%;
     padding: 12px;
-    background: #7367f0; /* Soft muted purple */
-    color: #fff;
+    background: #5c67e8;
+    color: white;
     border: none;
     border-radius: 6px;
     font-size: 16px;
@@ -77,95 +129,28 @@ button {
 }
 
 button:hover {
-    background: #5a55c2; /* Darker shade for hover */
+    background: #4a50b9;
     transform: scale(1.05);
 }
 
-/* Dashboard Styles */
-header {
-    background: #2e3149;
-    padding: 10px;
-    text-align: left;
+/* Slide-in Effects */
+.slide-in-left, .slide-in-right {
+    opacity: 0;
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
 }
 
-.logout-button {
-    float: right;
-    color: #fff;
-    text-decoration: none;
-    font-size: 16px;
+.slide-in-left {
+    transform: translateX(-100px);
 }
 
-/* Dashboard Container */
-.dashboard-container {
-    max-width: 800px;
-    margin: 50px auto;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+.slide-in-right {
+    transform: translateX(100px);
 }
 
-/* Sections */
-section {
-    margin-bottom: 20px;
-}
-
-/* Resume Preview */
-.resume-preview {
-    background: rgba(255, 255, 255, 0.15);
-    padding: 15px;
-    border-radius: 8px;
-}
-
-/* File Upload */
-input[type="file"] {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 8px;
-    border-radius: 6px;
-}
-
-/* Smooth Transitions */
-.form-container, .dashboard-container, .resume-preview {
-    transition: all 0.3s ease-in-out;
-}
-
-/* Responsive Design */
+/* Scroll Animation */
 @media (max-width: 768px) {
-    .container, .dashboard-container {
+    .dashboard-container {
         width: 90%;
         padding: 15px;
     }
-}
-.hidden {
-    display: none;
-}
-
-.container {
-    width: 300px;
-    margin: auto;
-    text-align: center;
-}
-
-input {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
-    padding: 10px;
-}
-
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: blue;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.success {
-    color: green;
-}
-
-.error {
-    color: red;
 }
