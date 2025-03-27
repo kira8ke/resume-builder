@@ -1,7 +1,9 @@
 <?php
-include 'dashboard.php'; // Ensure this file exists and is correct
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-session_start(); // Start session after including database connection
+include 'dashboard.php'; // Ensure this file exists and is correct
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'] ?? '';
@@ -37,7 +39,6 @@ $conn->close();
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-session_start();
 require 'dashboard.php'; // Make sure this file exists and is correctly included
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
