@@ -9,15 +9,31 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert(`${input.placeholder} is required!`);
                 return false;
             }
+
+            // Email validation
+            if (input.type === "email" && !/\S+@\S+\.\S+/.test(input.value)) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+
+            // Password validation (min 6 characters)
+            if (input.type === "password" && input.value.length < 6) {
+                alert("Password must be at least 6 characters long.");
+                return false;
+            }
         }
         return true;
     }
 
-    registerForm.addEventListener("submit", (e) => {
-        if (!validateForm(registerForm)) e.preventDefault();
-    });
+    if (registerForm) {
+        registerForm.addEventListener("submit", (e) => {
+            if (!validateForm(registerForm)) e.preventDefault();
+        });
+    }
 
-    loginForm.addEventListener("submit", (e) => {
-        if (!validateForm(loginForm)) e.preventDefault();
-    });
+    if (loginForm) {
+        loginForm.addEventListener("submit", (e) => {
+            if (!validateForm(loginForm)) e.preventDefault();
+        });
+    }
 });
