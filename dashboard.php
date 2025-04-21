@@ -58,28 +58,7 @@ if (!isset($_SESSION['user_id'])) {
         </section>
     </main>
 
-    <script>
-        $(document).ready(function () {
-            // Fade in dashboard on page load
-            $("body").hide().fadeIn(1000);
-
-            // Slide in effects
-            $(".slide-in-left").css({opacity: 0, transform: "translateX(-100px)"});
-            $(".slide-in-right").css({opacity: 0, transform: "translateX(100px)"});
-
-            $(window).scroll(function () {
-                $(".slide-in-left, .slide-in-right").each(function () {
-                    var position = $(this).offset().top;
-                    var windowHeight = $(window).height();
-                    var scrollTop = $(window).scrollTop();
-
-                    if (position < scrollTop + windowHeight - 50) {
-                        $(this).animate({opacity: 1, transform: "translateX(0)"}, 1000);
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 
 </body>
 </html>

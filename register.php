@@ -1,50 +1,54 @@
 <?php
-require 'db_config.php'; // Ensure this file contains a valid PDO connection
 session_start();
+include 'db_config.php'; // Ensure this file is correct
 
-// Enable error reporting to see any hidden errors
+// Enable error reporting
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve and trim form inputs
-    $fullname = isset($_POST["fullname"]) ? trim($_POST["fullname"]) : '';
-    $email = isset($_POST["email"]) ? trim($_POST["email"]) : '';
-    $password = isset($_POST["password"]) ? trim($_POST["password"]) : '';
+    $fullname = trim($_POST['fullname']);
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
 
-    // Check if any field is empty
+    // Check if fields are empty
     if (empty($fullname) || empty($email) || empty($password)) {
-        die("<p style='color:red;'>All fields are required. Please go back and fill in all details.</p>");
+        die("⚠️ Error: All fields are required!");
     }
 
     try {
-        // Check if the email already exists
-        $stmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE email = :email");
+        // Log that the script reached this point
+        error_log("🔵 Checking if email already exists: $email");
+
+        // Check if email already exists
+        $stmt = $conn->prepare("SELECT id FROM users WHERE email = :email");
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
-        $emailExists = $stmt->fetchColumn();
 
-        if ($emailExists) {
-            die("<p style='color:red;'>Email already registered. Try logging in.</p>");
+        if ($stmt->rowCount() > 0) {
+            die("⚠️ Error: Email already registered!");
         }
 
-        // Hash the password for security
-        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+        // Hash password
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        error_log("🔵 Password hashed for user: $fullname");
 
-        // Insert user into the database
+        // Insert new user
         $stmt = $conn->prepare("INSERT INTO users (fullname, email, password) VALUES (:fullname, :email, :password)");
         $stmt->bindParam(':fullname', $fullname, PDO::PARAM_STR);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-        $stmt->bindParam(':password', $hashed_password, PDO::PARAM_STR);
-        $stmt->execute();
+        $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
 
-        // Redirect to login page after successful registration
-        header("Location: login.php");
-        exit();
+        if ($stmt->execute()) {
+            error_log("✅ User $fullname registered successfully.");
+            echo "✅ Registration successful! Redirecting to login...";
+            header("Refresh: 2; URL=login.php"); // Redirect after 2 seconds
+            exit();
+        } else {
+            die("❌ Error: Registration failed! Check database permissions.");
+        }
     } catch (PDOException $e) {
-        die("<p style='color:red;'>Database error: " . $e->getMessage() . "</p>");
+        die("❌ Database Error: " . $e->getMessage());
     }
-} else {
-    die("<p style='color:red;'>Invalid request method. Please submit the form properly.</p>");
 }
 ?>

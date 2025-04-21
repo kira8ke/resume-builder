@@ -1,9 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
+    console.log("JavaScript Loaded Successfully!");
+
     const registerForm = document.getElementById("register-form");
     const loginForm = document.getElementById("login-form");
     const showRegisterBtn = document.getElementById("show-register");
     const showLoginBtn = document.getElementById("show-login");
+    const registerSubmit = document.getElementById("registerForm");
 
+    // Function to validate the form
     function validateForm(form) {
         const inputs = form.querySelectorAll("input[required]");
         for (let input of inputs) {
@@ -27,21 +31,17 @@ document.addEventListener("DOMContentLoaded", () => {
         return true;
     }
 
-    if (registerForm) {
-        registerForm.addEventListener("submit", (e) => {
-            if (!validateForm(registerForm)) {
-                e.preventDefault();
-            } else {
-                alert("Registration successful! Please log in.");
-                registerForm.style.display = "none";
-                loginForm.style.display = "block";
-            }
-        });
-    }
-
-    if (loginForm) {
-        loginForm.addEventListener("submit", (e) => {
-            if (!validateForm(loginForm)) e.preventDefault();
+    // Handle Registration Form Submission
+    if (registerSubmit) {
+        registerSubmit.addEventListener("submit", (e) => {
+            e.preventDefault();
+            if (!validateForm(registerSubmit)) return;
+            
+            alert("Registration successful! Please log in.");
+            
+            // Hide registration form and show login form
+            registerForm.style.display = "none";
+            loginForm.style.display = "block";
         });
     }
 
@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (showRegisterBtn) {
         showRegisterBtn.addEventListener("click", (e) => {
             e.preventDefault();
+            console.log("Switching to Register Form");
             loginForm.style.display = "none";
             registerForm.style.display = "block";
         });
@@ -58,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (showLoginBtn) {
         showLoginBtn.addEventListener("click", (e) => {
             e.preventDefault();
+            console.log("Switching to Login Form");
             registerForm.style.display = "none";
             loginForm.style.display = "block";
         });

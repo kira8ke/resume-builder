@@ -1,8 +1,8 @@
 <?php
 session_start();
-include 'db_config.php'; // Ensure this file exists and contains a working PDO connection
+include 'db_config.php'; // Ensure this file has a working PDO connection
 
-// Enable error reporting for debugging
+// Enable error reporting
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -16,15 +16,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     try {
-        // Prepare the SQL statement to get user data
+        // Fetch user details based on email
         $stmt = $conn->prepare("SELECT id, fullname, password FROM users WHERE email = :email");
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
-
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // If user exists, verify password
-        if ($user && password_verify($password, $user['password'])) {
+        // Debugging: Check if user exists
+        if (!$user) {
+            echo "No user found with email: " . htmlspecialchars($email) . "<br>";
+            exit();
+        }
+
+        // Debugging: Show stored hashed password and entered password
+        echo "Stored Hashed Password: " . $user['password'] . "<br>";
+        echo "Entered Password: " . $password . "<br>";
+
+        // Check if the password matches
+        if (password_verify($password, $user['password'])) {
+            echo "✅ Password Matched! Redirecting to dashboard...<br>";
+
+            // Set session variables
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['fullname'] = $user['fullname'];
 
@@ -32,10 +44,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: dashboard.php");
             exit();
         } else {
-            echo "Invalid email or password!";
+            echo "❌ Invalid password!<br>";
+            exit();
         }
     } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
+        echo "Database Error: " . $e->getMessage();
     }
 }
 ?>
