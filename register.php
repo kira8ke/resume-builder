@@ -1,12 +1,13 @@
 <?php
 session_start();
-include 'db_config.php'; // This now uses $conn
+include 'db_config.php'; // This uses $conn
 
 // Enable error reporting (for development only)
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get the form data and sanitize it
     $fullname = trim($_POST['fullname']);
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
@@ -35,6 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
 
+        // Execute the query and check if it was successful
         if ($stmt->execute()) {
             echo "✅ Registration successful! Redirecting to login...";
             header("Refresh: 2; URL=login.php");
