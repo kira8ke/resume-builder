@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $file_type = mime_content_type($_FILES['resume']['tmp_name']);
 
         if (in_array($file_type, $allowed_types)) {
-            $upload_dir = "/uploads/";
+            $upload_dir = "uploads/";
             $unique_name = uniqid() . '_' . basename($_FILES['resume']['name']);
             $target_path = $upload_dir . $unique_name;
 
