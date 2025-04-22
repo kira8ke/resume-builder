@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
     console.log("JavaScript Loaded Successfully!");
 
-    const registerForm = document.getElementById("register-form");
-    const loginForm = document.getElementById("login-form");
+    const registerFormContainer = document.getElementById("register-form");
+    const loginFormContainer = document.getElementById("login-form");
     const showRegisterBtn = document.getElementById("show-register");
     const showLoginBtn = document.getElementById("show-login");
-    const registerSubmit = document.getElementById("registerForm");
+    const registerForm = document.getElementById("registerForm");
 
-    // Function to validate the form
+    // Validate form inputs
     function validateForm(form) {
         const inputs = form.querySelectorAll("input[required]");
         for (let input of inputs) {
@@ -16,13 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 return false;
             }
 
-            // Email validation
             if (input.type === "email" && !/\S+@\S+\.\S+/.test(input.value)) {
                 alert("Please enter a valid email address.");
                 return false;
             }
 
-            // Password validation (min 6 characters)
             if (input.type === "password" && input.value.length < 6) {
                 alert("Password must be at least 6 characters long.");
                 return false;
@@ -31,37 +29,28 @@ document.addEventListener("DOMContentLoaded", () => {
         return true;
     }
 
-    // Handle Registration Form Submission
-    if (registerSubmit) {
-        registerSubmit.addEventListener("submit", (e) => {
-            e.preventDefault();
-            if (!validateForm(registerSubmit)) return;
-            
-            alert("Registration successful! Please log in.");
-            
-            // Hide registration form and show login form
-            registerForm.style.display = "none";
-            loginForm.style.display = "block";
-        });
-    }
+    // Show registration form
+    showRegisterBtn?.addEventListener("click", () => {
+        loginFormContainer.classList.add("hidden");
+        registerFormContainer.classList.remove("hidden");
+    });
 
-    // Show Register Form and Hide Login Form
-    if (showRegisterBtn) {
-        showRegisterBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            console.log("Switching to Register Form");
-            loginForm.style.display = "none";
-            registerForm.style.display = "block";
-        });
-    }
+    // Show login form
+    showLoginBtn?.addEventListener("click", () => {
+        registerFormContainer.classList.add("hidden");
+        loginFormContainer.classList.remove("hidden");
+    });
 
-    // Show Login Form and Hide Register Form
-    if (showLoginBtn) {
-        showLoginBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            console.log("Switching to Login Form");
-            registerForm.style.display = "none";
-            loginForm.style.display = "block";
-        });
-    }
+    // Handle registration form submit
+    registerForm?.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        if (!validateForm(registerForm)) return;
+
+        alert("Registration successful! Please log in.");
+
+        // Switch back to login
+        registerFormContainer.classList.add("hidden");
+        loginFormContainer.classList.remove("hidden");
+    });
 });

@@ -9,8 +9,8 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Fetch user resume data
-$stmt = $pdo->prepare("SELECT * FROM resumes WHERE user_id = ?");
+// Get the latest resume
+$stmt = $pdo->prepare("SELECT * FROM resumes WHERE user_id = ? ORDER BY created_at DESC LIMIT 1");
 $stmt->execute([$user_id]);
 $resume = $stmt->fetch();
 
@@ -23,7 +23,7 @@ if (!$resume) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Generated Resume</title>
+    <title>Your Generated Resume</title>
     <link rel="stylesheet" href="../css/resume.css">
 </head>
 <body>
@@ -37,6 +37,10 @@ if (!$resume) {
 
         <h2>Skills</h2>
         <p><?php echo nl2br(htmlspecialchars($resume['skills'])); ?></p>
+
+        <?php if (!empty($resume['resume_file'])): ?>
+            <p><a href="<?php echo htmlspecialchars($resume['resume_file']); ?>" target="_blank">Download Uploaded Resume</a></p>
+        <?php endif; ?>
 
         <button onclick="window.print()">Print Resume</button>
     </div>
