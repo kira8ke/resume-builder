@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db_config.php'; // This uses $pdo, not $conn
+include 'db_config.php'; // This now uses $conn
 
 // Enable error reporting (for development only)
 error_reporting(E_ALL);
@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // Check if email already exists
-        $stmt = $pdo->prepare("SELECT id FROM users WHERE email = :email");
+        $stmt = $conn->prepare("SELECT id FROM users WHERE email = :email");
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
 
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         // Insert the new user into the database
-        $stmt = $pdo->prepare("INSERT INTO users (fullname, email, password) VALUES (:fullname, :email, :password)");
+        $stmt = $conn->prepare("INSERT INTO users (fullname, email, password) VALUES (:fullname, :email, :password)");
         $stmt->bindParam(':fullname', $fullname, PDO::PARAM_STR);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);

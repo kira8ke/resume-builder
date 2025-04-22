@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 // Get the latest resume
-$stmt = $pdo->prepare("SELECT * FROM resumes WHERE user_id = ? ORDER BY created_at DESC LIMIT 1");
+$stmt = $conn->prepare("SELECT * FROM resumes WHERE user_id = ? ORDER BY created_at DESC LIMIT 1");
 $stmt->execute([$user_id]);
 $resume = $stmt->fetch();
 

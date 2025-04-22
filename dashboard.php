@@ -1,8 +1,7 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+session_start();
 
+// Redirect to login if user is not authenticated
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.html");
     exit();
@@ -29,7 +28,7 @@ if (!isset($_SESSION['user_id'])) {
     <!-- Main Content -->
     <main class="dashboard-container">
         <header class="intro">
-            <h1>Welcome, <?php echo isset($_SESSION['fullname']) ? htmlspecialchars($_SESSION['fullname']) : 'Guest'; ?>!</h1>
+            <h1>Welcome, <?php echo htmlspecialchars($_SESSION['fullname'] ?? 'Guest'); ?>!</h1>
             <p>Start building your professional resume today.</p>
         </header>
 
@@ -43,9 +42,8 @@ if (!isset($_SESSION['user_id'])) {
                 <textarea name="experience" placeholder="Experience" required></textarea>
                 <textarea name="skills" placeholder="Skills" required></textarea>
 
-                <!-- File Upload -->
                 <label for="resume">Upload Your Resume (PDF/DOCX):</label>
-                <input type="file" name="resume" accept=".pdf,.docx" required>
+                <input type="file" name="resume" id="resume" accept=".pdf,.docx" required>
 
                 <button type="submit">Submit Resume</button>
             </form>

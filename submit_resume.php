@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'db_config.php'; // Database connection
+require 'db_config.php'; // Uses $conn now
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Ensure user is logged in
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Insert into database
     $sql = "INSERT INTO resumes (user_id, full_name, email, phone, experience, skills, resume_file) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $pdo->prepare($sql);
+    $stmt = $conn->prepare($sql);
     $success = $stmt->execute([$user_id, $full_name, $email, $phone, $experience, $skills, $resume_file]);
 
     if ($success) {
